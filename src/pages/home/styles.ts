@@ -1,4 +1,4 @@
-import { styled } from '..'
+import { styled } from '../../styles'
 
 export const HomeContainer = styled('main', {
   display: 'flex',
@@ -18,6 +18,10 @@ export const FiltersContainer = styled('div', {
   width: '100%',
   height: '6rem',
   backgroundColor: '$gray100',
+
+  '@media(max-width: 600px)': {
+    backgroundColor: '$green300',
+  },
 })
 
 export const PageTitle = styled('h1', {
@@ -30,22 +34,33 @@ export const ProductsContainer = styled('div', {
   flexWrap: 'wrap',
   margin: '1rem',
   gap: '2rem',
+  justifyContent: 'center',
+  width: '100%',
 })
 
 export const Product = styled('div', {
-  background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
+  display: 'flex',
+  flexDirection: 'column',
+  background: '#fff',
   borderRadius: 4,
   cursor: 'pointer',
   position: 'relative',
   overflow: 'hidden',
 
-  display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
 
-  width: '8rem',
-  height: '8rem',
+  width: '9rem',
+
   img: {
-    objectFit: 'cover',
+    objectFit: 'contain',
+    width: '8rem',
+    height: '9rem',
+  },
+
+  h4: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
   },
 })
