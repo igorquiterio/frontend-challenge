@@ -22,10 +22,7 @@ interface HomeProps {
   message: string
 }
 
-export default function Home(resp: HomeProps) {
-  console.log(resp)
-
-  const products = resp.products
+export default function Home({ message, products }: HomeProps) {
   return (
     <>
       <Head>
@@ -38,14 +35,13 @@ export default function Home(resp: HomeProps) {
           {products?.map(product => {
             return (
               <Product key={product.id}>
-                <h3>{product.title}</h3>
                 <Image
                   src={product.image}
                   width={128}
                   height={144}
                   alt={product.title}
                   placeholder="blur"
-                  blurDataURL="none"
+                  blurDataURL="default"
                 />
               </Product>
             )
@@ -77,8 +73,6 @@ export const getStaticProps: GetStaticProps = async () => {
       console.error(err)
       message = err
     })
-
-  console.log(products)
 
   return {
     props: {
