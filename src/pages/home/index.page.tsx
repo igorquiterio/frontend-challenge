@@ -35,6 +35,7 @@ export default function Home({ message, products }: HomeProps) {
           {products?.map(product => {
             return (
               <Product key={product.id}>
+                <h4>{product.title}</h4>
                 <Image
                   src={product.image}
                   width={128}

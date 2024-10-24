@@ -48,7 +48,7 @@ export const Product = styled('div', {
   overflow: 'hidden',
 
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'flex-start',
 
   width: '9rem',
 
@@ -59,8 +59,9 @@ export const Product = styled('div', {
   },
 
   h4: {
+    fontSize: '$sm',
+    color: '$gray900',
     overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
+    height: '2rem',
   },
 })
