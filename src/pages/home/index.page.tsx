@@ -2,27 +2,27 @@ import {
   FiltersContainer,
   HomeContainer,
   PageTitle,
-  Product,
   ProductsContainer,
 } from '@/pages/home/styles'
 import Head from 'next/head'
-import Image from 'next/image'
-
-export type Product = {
-  id: number
-  title: string
-  price: number
-  description: string
-  category: string
-  image: string
-}
+import { ProductComponent } from './components/Product/index.page'
+import type { Product } from '@/reducers/Product/reducer'
+import type { GetStaticProps } from 'next'
+import { useContext, useEffect } from 'react'
+import { ProductsContext } from '@/context/ProductsContext'
 
 interface HomeProps {
-  products: Product[]
+  productsList: Product[]
   message: string
 }
 
-export default function Home({ message, products }: HomeProps) {
+export default function Home({ message, productsList }: HomeProps) {
+  const { products, saveProductsList } = useContext(ProductsContext)
+
+  useEffect(() => {
+    saveProductsList(productsList)
+  }, [saveProductsList, productsList])
+
   return (
     <>
       <Head>
@@ -31,23 +31,18 @@ export default function Home({ message, products }: HomeProps) {
       <HomeContainer>
         <PageTitle>Fake Store</PageTitle>
         <FiltersContainer>todo</FiltersContainer>
-        <ProductsContainer>
-          {products?.map(product => {
-            return (
-              <Product key={product.id}>
-                <h4>{product.title}</h4>
-                <Image
-                  src={product.image}
-                  width={128}
-                  height={144}
-                  alt={product.title}
-                  placeholder="blur"
-                  blurDataURL="default"
-                />
-              </Product>
-            )
-          })}
-        </ProductsContainer>
+        {message === 'ok' ? (
+          <ProductsContainer>
+            {products?.map(product => {
+              return <ProductComponent key={product.id} product={product} />
+            })}
+          </ProductsContainer>
+        ) : (
+          <>
+            {console.error(message)}
+            <h1>Houve um problema, tente novamente mais tarde</h1>
+          </>
+        )}
       </HomeContainer>
     </>
   )
@@ -55,7 +50,6 @@ export default function Home({ message, products }: HomeProps) {
 
 export const getStaticProps: GetStaticProps = async () => {
   let message = ''
-
   const products = await fetch('https://fakestoreapi.com/products')
     .then(res => res.json())
     .then(json =>
@@ -77,7 +71,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      products,
+      productsList: products,
       message: message || 'ok',
     },
     revalidate: 60 * 60 * 2, // 2 hours,

@@ -18,10 +18,6 @@ export const FiltersContainer = styled('div', {
   width: '100%',
   height: '6rem',
   backgroundColor: '$gray100',
-
-  '@media(max-width: 600px)': {
-    backgroundColor: '$green300',
-  },
 })
 
 export const PageTitle = styled('h1', {
@@ -36,32 +32,4 @@ export const ProductsContainer = styled('div', {
   gap: '2rem',
   justifyContent: 'center',
   width: '100%',
-})
-
-export const Product = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  background: '#fff',
-  borderRadius: 4,
-  cursor: 'pointer',
-  position: 'relative',
-  overflow: 'hidden',
-
-  alignItems: 'center',
-  justifyContent: 'flex-start',
-
-  width: '9rem',
-
-  img: {
-    objectFit: 'contain',
-    width: '8rem',
-    height: '9rem',
-  },
-
-  h4: {
-    fontSize: '$sm',
-    color: '$gray900',
-    overflow: 'hidden',
-    height: '2rem',
-  },
 })
