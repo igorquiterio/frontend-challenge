@@ -43,45 +43,38 @@ export function ProductsContextProvider({
     }
   )
 
-  const { products } = productsState
+  let { products } = productsState
 
-  const filter = {
+  const [filter, setFilter] = useState<Filter>({
     term: null,
     category: null,
     priceMin: null,
     priceMax: null,
-  }
-
-  // const [filter, setFilter] = useState<Filter>({
-  //   term: null,
-  //   category: null,
-  //   priceMin: null,
-  //   priceMax: null,
-  // })
+  })
 
   useEffect(() => {
     const stateJSON = JSON.stringify(products)
     saveState(stateJSON)
   }, [products])
 
-  // const { term, category, priceMin, priceMax } = filter
+  const { term, category, priceMin, priceMax } = filter
 
-  // products = products?.filter(product => {
-  //   const isTitleValid =
-  //     term === null || product.title.toLowerCase().includes(term.toLowerCase())
+  products = products?.filter(product => {
+    const isTitleValid =
+      term === null || product.title.toLowerCase().includes(term.toLowerCase())
 
-  //   const isCategoryValid = category === null || category === product.category
+    const isCategoryValid = category === null || category === product.category
 
-  //   const priceMinParse = priceMin === null ? 0 : priceMin
+    const priceMinParse = priceMin === null ? 0 : priceMin
 
-  //   const priceMaxParse =
-  //     priceMax === null ? Number.POSITIVE_INFINITY : priceMax
+    const priceMaxParse =
+      priceMax === null ? Number.POSITIVE_INFINITY : priceMax
 
-  //   const isPriceRangeValid =
-  //     priceMinParse <= product.price && priceMaxParse >= product.price
+    const isPriceRangeValid =
+      priceMinParse <= product.price && priceMaxParse >= product.price
 
-  //   return isTitleValid && isCategoryValid && isPriceRangeValid
-  // })
+    return isTitleValid && isCategoryValid && isPriceRangeValid
+  })
 
   const saveProductsList = useCallback((products: Product[]) => {
     dispatch(saveList(products))
