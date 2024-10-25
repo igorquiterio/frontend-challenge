@@ -128,7 +128,6 @@ export const getStaticProps: GetStaticProps = async ({
     }
   }
 
-  const message = ''
   try {
     const url = `https://fakestoreapi.com/products/${realSlug}`
     const product = await fetch(url).then(res => res.json())
