@@ -1,5 +1,5 @@
 import {
-  FiltersContainer,
+  FilterBox,
   HomeContainer,
   PageTitle,
   ProductsContainer,
@@ -10,6 +10,7 @@ import type { Product } from '@/reducers/Product/reducer'
 import type { GetStaticProps } from 'next'
 import { useContext, useEffect } from 'react'
 import { ProductsContext } from '@/context/ProductsContext'
+import { FilterComponent } from './components/Filters/index.page'
 
 interface HomeProps {
   productsList: Product[]
@@ -29,8 +30,10 @@ export default function Home({ message, productsList }: HomeProps) {
         <title>Frontend Challenge</title>
       </Head>
       <HomeContainer>
-        <PageTitle>Fake Store</PageTitle>
-        <FiltersContainer>todo</FiltersContainer>
+        <FilterBox>
+          <PageTitle>Fake Store</PageTitle>
+          <FilterComponent />
+        </FilterBox>
         {message === 'ok' ? (
           <ProductsContainer>
             {products?.map(product => {

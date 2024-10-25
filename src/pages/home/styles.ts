@@ -12,12 +12,11 @@ export const HomeContainer = styled('main', {
   margin: '1rem',
 })
 
-export const FiltersContainer = styled('div', {
-  margin: '1rem',
-  borderRadius: 4,
+export const FilterBox = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
   width: '100%',
-  height: '6rem',
-  backgroundColor: '$gray100',
+  alignItems: 'center',
 })
 
 export const PageTitle = styled('h1', {

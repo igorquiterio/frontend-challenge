@@ -5,22 +5,25 @@ import {
   createContext,
   useCallback,
   useEffect,
+  useMemo,
   useReducer,
   useState,
   type ReactNode,
 } from 'react'
 
 interface Filter {
-  term: string | null
-  category: string | null
-  priceMin: number | null
-  priceMax: number | null
+  term?: string | undefined
+  category?: string | undefined
+  priceMin?: number | undefined
+  priceMax?: number | undefined
 }
 
 interface ProductsContextType {
   products: Product[]
   filter: Filter
+  categories: string[]
   saveProductsList: (products: Product[]) => void
+  receiveFilterData: (filter: Filter) => void
 }
 
 export const ProductsContext = createContext({} as ProductsContextType)
@@ -32,6 +35,8 @@ interface ProductsContextProviderProps {
 export function ProductsContextProvider({
   children,
 }: ProductsContextProviderProps) {
+  const [categories, setCategories] = useState<string[]>([])
+
   const [productsState, dispatch] = useReducer(
     productsReducer,
     {
@@ -43,45 +48,71 @@ export function ProductsContextProvider({
     }
   )
 
-  let { products } = productsState
+  const { products } = productsState
 
   const [filter, setFilter] = useState<Filter>({
-    term: null,
-    category: null,
-    priceMin: null,
-    priceMax: null,
+    term: undefined,
+    category: undefined,
+    priceMin: undefined,
+    priceMax: undefined,
   })
 
   useEffect(() => {
-    const stateJSON = JSON.stringify(products)
-    saveState(stateJSON)
+    if (products) {
+      const stateJSON = JSON.stringify(products)
+      saveState(stateJSON)
+
+      const allCategories = products?.map(prod => prod.category)
+      const uniqueCategories = [...new Set(allCategories)]
+      setCategories(uniqueCategories)
+    }
   }, [products])
 
   const { term, category, priceMin, priceMax } = filter
-
-  products = products?.filter(product => {
-    const isTitleValid =
-      term === null || product.title.toLowerCase().includes(term.toLowerCase())
-
-    const isCategoryValid = category === null || category === product.category
-
-    const priceMinParse = priceMin === null ? 0 : priceMin
-
-    const priceMaxParse =
-      priceMax === null ? Number.POSITIVE_INFINITY : priceMax
-
-    const isPriceRangeValid =
-      priceMinParse <= product.price && priceMaxParse >= product.price
-
-    return isTitleValid && isCategoryValid && isPriceRangeValid
-  })
 
   const saveProductsList = useCallback((products: Product[]) => {
     dispatch(saveList(products))
   }, [])
 
+  const receiveFilterData = useCallback((filter: Filter) => {
+    console.log()
+    setFilter(filter)
+  }, [])
+
+  const productsAfterFilter = useMemo<Product[]>(() => {
+    return products?.filter(product => {
+      const isTitleValid =
+        term === undefined ||
+        term === '' ||
+        product.title.toLowerCase().includes(term.toLowerCase())
+
+      const isCategoryValid =
+        category === undefined ||
+        category === '' ||
+        category === product.category
+
+      const priceMinParse = priceMin === undefined ? 0 : priceMin
+
+      const priceMaxParse =
+        priceMax === undefined ? Number.POSITIVE_INFINITY : priceMax
+
+      const isPriceRangeValid =
+        priceMinParse <= product.price && priceMaxParse >= product.price
+
+      return isTitleValid && isCategoryValid && isPriceRangeValid
+    })
+  }, [term, category, priceMin, priceMax, products])
+
   return (
-    <ProductsContext.Provider value={{ products, filter, saveProductsList }}>
+    <ProductsContext.Provider
+      value={{
+        products: productsAfterFilter,
+        filter,
+        categories,
+        saveProductsList,
+        receiveFilterData,
+      }}
+    >
       {children}
     </ProductsContext.Provider>
   )

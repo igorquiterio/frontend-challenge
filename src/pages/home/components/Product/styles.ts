@@ -14,6 +14,7 @@ export const ProductDiv = styled('div', {
   justifyContent: 'flex-start',
 
   width: '10rem',
+  borderBottom: '5px solid transparent',
 
   '@media(max-width: 600px)': {
     width: '100%',
@@ -33,6 +34,7 @@ export const ProductDiv = styled('div', {
     height: '2rem',
     width: '100%',
     padding: '2px',
+    fontWeight: 'normal',
   },
 
   h5: {
@@ -46,12 +48,20 @@ export const ProductDiv = styled('div', {
   },
 
   '&:hover': {
+    borderBottom: '5px solid $green300',
     h5: {
       display: 'block',
       position: 'absolute',
       color: '$gray900',
-      background: '#fffff0',
+      background: '#fff',
+      border: '2px solid $green300',
+      borderRadius: 4,
       width: '100%',
+      marginTop: '-2px',
+      fontWeight: 'normal',
+    },
+    span: {
+      fontWeight: 'bold',
     },
   },
 })
