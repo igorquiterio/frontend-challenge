@@ -19,7 +19,7 @@ describe('ProductComponent', () => {
     expect(titles).toHaveLength(2)
     expect(titles[0]).toBeInTheDocument()
 
-    expect(screen.getByText('R$ 10,00')).toBeInTheDocument() // Assumindo que o formato de moeda está correto
+    expect(screen.getByText('R$ 10,00')).toBeInTheDocument()
 
     const image = screen.getByRole('img', { name: 'Produto 1' })
     expect(image).toBeInTheDocument()
