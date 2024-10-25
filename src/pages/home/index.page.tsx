@@ -69,7 +69,7 @@ export const getStaticProps: GetStaticProps = async () => {
     )
     .catch(err => {
       console.error(err)
-      message = err
+      message = 'Fetch error'
     })
 
   return {
