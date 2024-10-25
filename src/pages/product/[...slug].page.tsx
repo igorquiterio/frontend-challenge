@@ -29,7 +29,6 @@ export default function ProductPage({
   message,
   isProductSaved,
 }: ProductPageProps) {
-  console.log(slug, product, message)
   const router = useRouter()
 
   const { products } = useContext(ProductsContext)

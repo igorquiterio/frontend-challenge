@@ -75,7 +75,6 @@ export function ProductsContextProvider({
   }, [])
 
   const receiveFilterData = useCallback((filter: Filter) => {
-    console.log()
     setFilter(filter)
   }, [])
 
