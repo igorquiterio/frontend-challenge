@@ -24,8 +24,12 @@ export const FiltersContainer = styled('div', {
     fontSize: '$lg',
     padding: '0 0.5rem',
     color: '$gray100',
+    minWidth: 'calc((90vw/4) - 2rem)',
     option: {
       background: '$gray800',
+    },
+    '@media(max-width: 600px)': {
+      width: '300px',
     },
   },
 
